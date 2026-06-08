@@ -1,12 +1,24 @@
 #!/usr/bin/env python3
 import os,sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser,RawDescriptionHelpFormatter
 from datetime import date,datetime,time,timedelta,timezone,tzinfo
 from debug import DebugChannel
 from handy import die,gripe
 from parsedatetime import Calendar
 
-ap=ArgumentParser()
+ap=ArgumentParser(
+    formatter_class=RawDescriptionHelpFormatter,
+    epilog="""
+Examples:
+    % dt
+    Monday, 2026-06-08 00:12:18
+    % dt tomorrow
+    Tuesday, 2026-06-09 09:00:00
+    % dt 2 weeks from now
+    Monday, 2026-06-22 00:12:38
+    % dt --base "July 5" 2 weeks from now
+    Sunday, 2026-07-19 00:13:27
+""")
 ap.add_argument('--debug',action='store_true',help="Turn on debugging output.")
 ap.add_argument('--doc',metavar='MODULE',action='store',help="Get help with the given Python module.")
 ap.add_argument('--base',metavar='T',action='store',help="Set the base date and time used to interpret the date and time on the command line.")
